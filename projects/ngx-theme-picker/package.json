@@ -2,8 +2,11 @@
   "name": "ngx-theme-picker",
   "version": "0.0.1",
   "peerDependencies": {
+    "@angular/animations": "20.1.6",
+    "@angular/cdk": "20.1.5",
     "@angular/common": "^20.2.0",
-    "@angular/core": "^20.2.0"
+    "@angular/core": "^20.2.0",
+    "@angular/material": "20.1.5"
   },
   "dependencies": {
     "tslib": "^2.3.0"

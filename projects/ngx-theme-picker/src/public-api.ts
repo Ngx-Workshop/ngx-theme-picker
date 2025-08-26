@@ -3,3 +3,4 @@
  */
 
 export * from './lib/ngx-theme-picker';
+export * from './lib/theme-picker.service';
