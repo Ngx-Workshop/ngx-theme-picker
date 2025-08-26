@@ -1,5 +1,4 @@
 import {
-  computed,
   Injectable,
   linkedSignal,
   resource,
@@ -84,7 +83,9 @@ export class ThemePickerService {
   ];
 
   darkMode = signal<boolean>(
-    localStorage.getItem(ThemePickerService.DARK_MODE_STRORAGE_KEY) === 'true'
+    localStorage.getItem(
+      ThemePickerService.DARK_MODE_STRORAGE_KEY
+    ) === 'true'
   );
   darkModeResource = resource({
     params: () => this.darkMode(),
@@ -97,7 +98,8 @@ export class ThemePickerService {
   });
 
   userSelectedTheme = signal<string>(
-    localStorage.getItem(ThemePickerService.THEME_STRORAGE_KEY) ?? ThemePickerService.DEFAULT_THEME
+    localStorage.getItem(ThemePickerService.THEME_STRORAGE_KEY) ??
+      ThemePickerService.DEFAULT_THEME
   );
   currentTheme = linkedSignal<string, string>({
     source: this.userSelectedTheme,
@@ -109,7 +111,10 @@ export class ThemePickerService {
   });
 
   setThemeStyleAndLocalStorage(newTheme: string) {
-    localStorage.setItem(ThemePickerService.THEME_STRORAGE_KEY, newTheme);
+    localStorage.setItem(
+      ThemePickerService.THEME_STRORAGE_KEY,
+      newTheme
+    );
     document.body.className = `${newTheme} ${
       this.darkMode() ? 'dark-mode' : 'light-mode'
     }`;

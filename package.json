@@ -4,8 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "demo:build": "ng build ngx-theme-picker-demo --configuration production --base-href \"/ngx-theme-picker/\"",
+    "watch-demo": "ng serve ngx-theme-picker-demo",
+    "ngx-theme-picker:build": "ng build ngx-theme-picker --configuration production",
+    "ngx-theme-picker:watch": "ng build ngx-theme-picker --watch --configuration development",
+    "deployDemo": "npx angular-cli-ghpages --dir=dist/ngx-theme-picker-demo/browser",
     "test": "ng test"
   },
   "private": true,

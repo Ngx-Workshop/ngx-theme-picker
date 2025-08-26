@@ -34,6 +34,12 @@
     },
     {
       "path": "./projects/ngx-theme-picker/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/ngx-theme-picker-demo/tsconfig.app.json"
+    },
+    {
+      "path": "./projects/ngx-theme-picker-demo/tsconfig.spec.json"
     }
   ]
 }
