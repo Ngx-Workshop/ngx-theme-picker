@@ -79,7 +79,8 @@ export class ThemePickerMenuItemComponent {
     <button
       mat-icon-button
       [mat-menu-trigger-for]="themeMenu"
-      matTooltip="Select a theme for the documentation"
+      matTooltip="Select a theme"
+      aria-label="Select a theme"
     >
       <mat-icon>format_color_fill</mat-icon>
     </button>
@@ -87,7 +88,8 @@ export class ThemePickerMenuItemComponent {
     <mat-menu #themeMenu="matMenu" xPosition="before">
       <div mat-menu-item>
         <mat-slide-toggle
-          [checked]="darkMode()"
+          [checked]="darkMode() || currentTheme() === 'neutral'"
+          [disabled]="currentTheme() === 'neutral'"
           (toggleChange)="toggleDarkMode()"
           >Dark Mode</mat-slide-toggle
         >
