@@ -1,59 +1,58 @@
 # NgxThemePicker
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.3.
+Shared theme picker for `@tmdjr/ngx-workshop-design-system`.
 
-## Development server
+## Host setup
 
-To start a local development server, run:
+Install the picker and `@tmdjr/ngx-workshop-design-system` (21.0.6 or later).
+Include the design system once in the host’s global Sass:
 
-```bash
-ng serve
+```scss
+@use '@tmdjr/ngx-workshop-design-system/theme' as ngx;
+@include ngx.theme();
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Remove Material prebuilt theme styles and the old body palette rules. Remove
+scoped `tokens()` / `material-adapter()` declarations that would override the
+root’s selected theme. Standalone remotes can include `ngx.theme()` in their
+own global styles for standalone use.
 
-## Code scaffolding
+Inject `ThemePickerService` in an app initializer to restore the theme before
+rendering. `<ngx-theme-picker />` supplies the menu; custom menus can continue
+to use `THEMES`, `currentTheme()`, `userSelectedTheme.set(name)` and
+`darkMode.set(boolean)`.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+| Selection | Light root attribute | Dark root attribute |
+| --- | --- | --- |
+| Workshop (`neon`) | `light` | `neon` |
+| Neutral (`neutral`) | `neutral` | `neutral` |
+| Amber (`amber`) | `amber-light` | `amber` |
+| Teal (`teal`) | `teal-light` | `teal-dark` |
+| NASA (`nasa`) | `nasa-light` | `nasa-dark` |
+| Reese’s (`reeses`) | `reeses-light` | `reeses-dark` |
 
-```bash
-ng generate component component-name
-```
+The service sets `data-ngx-theme` on `<html>`, so CDK overlays and federated
+remotes inherit the same semantic and Material tokens. Neutral is dark-only;
+the built-in picker disables its mode toggle and retains the saved mode for
+when a paired theme is selected.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+The existing `theme-picker-current-name` and `dark-mode` local-storage keys are
+retained. Legacy Material palettes and unknown names reset to Workshop while
+preserving the saved mode. A fresh profile starts in Workshop light mode.
+Only legacy palette/mode body classes are removed; other body classes survive.
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
+## Validate and release
 
 ```bash
-ng e2e
+npm ci
+npm run ngx-theme-picker:build
+npm run demo:build
+npx ng test ngx-theme-picker --watch=false --browsers=ChromeHeadless
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+The main-branch workflow assigns the published patch version from its run
+number. Publish this source change, then install that published version in
+`mfe-shell-admin` and update its picker singleton version in `webpack.config.js`.
+Keep remote singleton requirements compatible with the chosen version. The
+shell migration requires this updated picker; the old published implementation
+only writes legacy body classes.
